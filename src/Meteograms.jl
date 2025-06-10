@@ -4,7 +4,17 @@ module Meteograms
     using DataFrames, Statistics, INMET, Dates, PlotlyJS, Unitful, Missings
     using REPL.TerminalMenus
 
-    ENV["INMET_TOKEN"] = "SnFOaWF6Tmd4R1pXa1NQcVdIYlBOTWtNNVA5d29iUWI=JqNiazNgxGZWkSPqWHbPNMkM5P9wobQb"
+    #ENV["INMET_TOKEN"] = "SnFOaWF6Tmd4R1pXa1NQcVdIYlBOTWtNNVA5d29iUWI=JqNiazNgxGZWkSPqWHbPNMkM5P9wobQb"
+
+    function __init__()
+        # Configurar a variável de ambiente quando o pacote é carregado
+        ENV["INMET_TOKEN"] = "SnFOaWF6Tmd4R1pXa1NQcVdIYlBOTWtNNVA5d29iUWI=JqNiazNgxGZWkSPqWHbPNMkM5P9wobQb"
+        
+        # Opcional: verificar se foi configurado corretamente
+        if !haskey(ENV, "INMET_TOKEN")
+            @warn "Falha ao configurar INMET_TOKEN"
+        end
+    end
 
     function metereologia(start::String, finish::String, UF::String = "RS", Municipio = "FREDERICO WESTPHALEM")
         
