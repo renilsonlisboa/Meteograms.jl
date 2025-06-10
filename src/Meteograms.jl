@@ -16,7 +16,7 @@ module Meteograms
         end
     end
 
-    function metereologia(start::String, finish::String, UF::String = "RS", Municipio = "FREDERICO WESTPHALEM")
+    function meteorologia(start::String, finish::String, UF::String = "RS", Municipio = "FREDERICO WESTPHALEM")
         
         # Realiza a verificação e localização da Área de Trabalho do Usuário
         caminho_desktop = joinpath(homedir(), "OneDrive\\Área de Trabalho")
