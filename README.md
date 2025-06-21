@@ -77,23 +77,13 @@ resumo = resumo_meteorologico(dados)
 
 ---
 
-## 🔐 Autenticação e Token
-
-O INMET requer um token para acesso aos dados via API. Você pode obtê-lo gratuitamente em [https://portal.inmet.gov.br](https://portal.inmet.gov.br).
-
-```julia
-set_token("SEU_TOKEN_INMET")
-```
-
----
-
 ## 🛠️ Tecnologias Utilizadas
 
-- [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl)
-- [HTTP.jl](https://github.com/JuliaWeb/HTTP.jl)
-- [JSON3.jl](https://github.com/quinnj/JSON3.jl)
-- [Plots.jl](https://github.com/JuliaPlots/Plots.jl) ou [PlotlyJS.jl](https://github.com/JuliaPlots/PlotlyJS.jl)
+- [DataFrames](https://github.com/JuliaData/DataFrames.jl)
 - [Dates](https://docs.julialang.org/en/v1/stdlib/Dates/)
+- [INMET](https://github.com/JuliaClimate/INMET.jl)
+- [PlotlyJS](https://github.com/JuliaPlots/PlotlyJS.jl)
+- [Unitful](https://painterqubits.github.io/Unitful.jl/stable/)
 
 ---
 
@@ -112,8 +102,8 @@ Contribuições são bem-vindas! Sinta-se livre para abrir *issues*, *pull reque
 ## 📫 Contato
 
 Para dúvidas ou sugestões:
-- **Autor**: Renilson Lisboa Junior
-- **Email**: renilson@exemplo.com
+- **Autor**: Renilson Lisboa Júnior
+- **Email**: renilsonlisboajunior@exemplo.com
 - **Instituição**: UFPR - Universidade Federal do Paraná
 
 ---
