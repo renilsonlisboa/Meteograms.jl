@@ -77,12 +77,14 @@ resumo = resumo_meteorologico(dados)
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Pacotes Utilizados
 
 - [DataFrames](https://github.com/JuliaData/DataFrames.jl)
 - [Dates](https://docs.julialang.org/en/v1/stdlib/Dates/)
 - [INMET](https://github.com/JuliaClimate/INMET.jl)
+- [Missings](https://github.com/JuliaData/Missings.jl)
 - [PlotlyJS](https://github.com/JuliaPlots/PlotlyJS.jl)
+- [REPL](https://docs.julialang.org/en/v1/stdlib/REPL/)
 - [Unitful](https://painterqubits.github.io/Unitful.jl/stable/)
 
 ---
@@ -103,9 +105,7 @@ Contribuições são bem-vindas! Sinta-se livre para abrir *issues*, *pull reque
 
 Para dúvidas ou sugestões:
 - **Autor**: Renilson Lisboa Júnior
-- **Email**: renilsonlisboajunior@exemplo.com
+- **Email**: renilsonlisboajunior@gmail.com
 - **Instituição**: UFPR - Universidade Federal do Paraná
 
 ---
-
-> Desenvolvido com ❤️ em Julia para estudos ambientais e meteorológicos no Brasil.
