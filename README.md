@@ -14,12 +14,11 @@ O pacote pode ser instalado diretamente via Julia REPL:
 
 ```julia
 using Pkg
-Pkg.add(url="https://github.com/renilsonlisboa/Meteograms.jl.git")
+Pkg.add(url="https://github.com/renilsonlisboa/Meteograms.jl")
 ```
 
-> **Requisitos**: Julia 1.6 ou superior
+> **Requisitos**: Julia 1.10 ou superior
 
----
 
 ## 🚀 Funcionalidades
 
