@@ -28,7 +28,7 @@ Pkg.add(url="https://github.com/renilsonlisboa/Meteograms.jl")
 - 📊 **Agrupamento e resumo estatístico** por período (diário, mensal, anual)
 - 🌐 Suporte a múltiplas estações e períodos customizáveis
 
----
+
 
 ## 📂 Estrutura dos Dados
 
@@ -42,7 +42,7 @@ Os dados importados seguem a estrutura padrão do INMET e são retornados como `
 - `Velocidade_Vento`
 - `Direcao_Vento`
 
----
+
 
 ## 🧪 Exemplo de uso
 
@@ -65,16 +65,12 @@ plot_precipitacao(dados; tipo=:mensal)
 resumo = resumo_meteorologico(dados)
 ```
 
----
-
 ## 📊 Exemplos de Gráficos
 
 - Temperatura máxima e mínima com preenchimento entre curvas
 - Precipitação acumulada mensal
 - Boxplot de variações diárias
 - Séries temporais interativas com PlotlyJS (opcional)
-
----
 
 ## 🛠️ Pacotes Utilizados
 
@@ -86,19 +82,19 @@ resumo = resumo_meteorologico(dados)
 - [REPL](https://docs.julialang.org/en/v1/stdlib/REPL/)
 - [Unitful](https://painterqubits.github.io/Unitful.jl/stable/)
 
----
+
 
 ## 📄 Licença
 
 Este projeto está licenciado sob a [MIT License](LICENSE).
 
----
+
 
 ## 🙋‍♂️ Contribuindo
 
 Contribuições são bem-vindas! Sinta-se livre para abrir *issues*, *pull requests* ou sugerir melhorias.
 
----
+
 
 ## 📫 Contato
 
@@ -106,5 +102,3 @@ Para dúvidas ou sugestões:
 - **Autor**: Renilson Lisboa Júnior
 - **Email**: renilsonlisboajunior@gmail.com
 - **Instituição**: UFPR - Universidade Federal do Paraná
-
----
