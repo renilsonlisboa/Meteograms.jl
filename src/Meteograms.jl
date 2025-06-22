@@ -66,7 +66,7 @@ module Meteograms
 
             # Define um vetor com os dias do mês
             x = 1:1:day(Dates.lastdayofmonth(data))
-            
+
             # Define cada linha do gráfico
             trace_min = scatter(x=x, y=passmissing(x -> ustrip(x.val)).(teste.TEMP_MIN), mode="lines+markers", name="TEM_MIN",  line=attr(color="deepskyblue"))
             trace_med = scatter(x=x, y=passmissing(x -> ustrip(x.val)).(teste.TEMP_MED), mode="lines+markers", name="TEM_MED",  line=attr(color="limegreen"))
@@ -124,28 +124,91 @@ module Meteograms
             fig =   plot([trace_min, trace_med, trace_max], layout)
             savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Temperatura $(Meses[month(data)]) de $(year(data)).png", scale=3)
             
+            precipitacao = passmissing(x -> ustrip(x.val)).(teste.CHUVA)
+
+            # Preencher valores missing com 0 para o cálculo acumulado
+            precipitacao_preenchida = coalesce.(precipitacao, 0)
+            
+            # Calcular a precipitação acumulada
+            acumulado = cumsum(precipitacao_preenchida)
+            
             # Criar o gráfico de barras
             bar_plot = bar(
                 x=x,
-                y=passmissing(x -> ustrip(x.val)).(teste.CHUVA),
-                name="Dados Diários (Barras)",
+                y=precipitacao,
+                name="Precipitação Diária (mm)",
                 marker_color="rgba(55, 128, 191, 0.7)",
                 opacity=0.7
             )
             
-            # Combinar os gráficos
-            layout = Layout(
-                title = "Preciptação de $(Meses[month(data)]) de $(year(data))",
-                xaxis_title = "Dias",
-                yaxis_title = "Valores das Barras",
-                barmode = "group"
+            # Criar o gráfico de linha acumulado
+            line_plot = scatter(
+                x=x,
+                y=acumulado,
+                name="Preciptação Acumulada (mm)",
+                line=attr(color="red", width=2.5),
+                yaxis="y2"
             )
             
-            fig = plot(bar_plot, layout)
+            # Configurar o layout
+            layout = Layout(
+                title=attr(
+                    text="Precipitação em $(Meses[(month(data))]) de $(year(data))",
+                    x=0.5,
+                    xanchor="center",
+                    font=attr(
+                        family="Arial Black",
+                        size=14,
+                        color="black"
+                    )
+                ),
+                yaxis=attr(
+                    title=attr(
+                        text = "Precipitação Diária (mm)",
+                        font=attr(
+                            family="Arial Black",
+                            size=14,
+                            color="black"
+                        )
+                    ),
+                    side="left",
+                    showgrid=true
+                ),
+                yaxis2=attr(
+                    title= attr(
+                        text = "Precipitação Acumulada (mm)",
+                        font=attr(
+                            family="Arial Black",
+                            size=14,
+                            color="black"
+                        )
+                    ),
+                    overlaying="y",
+                    side="right",
+                    showgrid=false,
+                    zeroline=false
+                ),
+                plot_bgcolor="rgba(240, 240, 240, 0.8)",
+                legend=attr(
+                    orientation="h",
+                    x=0.5,
+                    xanchor="center",
+                    y=-0.05,
+                    font=attr(
+                        family="Arial Black",
+                        size=12,
+                        color="black"
+                    )
+                ),
+                #margin=attr(r=150)  # Aumenta margem direita para o eixo secundário
+            )
+            
+            fig = plot([bar_plot, line_plot], layout)
+            display(fig)
 
             savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Preciptação em $(Meses[month(data)]) de $(year(data)).png", scale=3)
 
-
+            
             resultado = vcat(resultado, DataFrame(Ano = year(data), Mês = Meses[month(data)], TEM_MIN = minimum([x.val for x in skipmissing(teste.TEMP_MIN)]), TEM_MED = round(mean([x.val for x in skipmissing(teste.TEMP_MED)]), digits = 1), TEM_MAX = maximum([x.val for x in skipmissing(teste.TEMP_MAX)])))
             
             data += Month(1)
