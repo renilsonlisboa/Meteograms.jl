@@ -19,7 +19,6 @@ Pkg.add(url="https://github.com/renilsonlisboa/Meteograms.jl")
 
 > **Requisitos**: Julia 1.10 ou superior
 
-
 ## 🚀 Funcionalidades
 
 - 🔄 **Importação automática de dados** do INMET por código de estação ou cidade
@@ -27,8 +26,6 @@ Pkg.add(url="https://github.com/renilsonlisboa/Meteograms.jl")
 - 📈 **Criação de gráficos** para análise de temperatura, precipitação, umidade, entre outros
 - 📊 **Agrupamento e resumo estatístico** por período (diário, mensal, anual)
 - 🌐 Suporte a múltiplas estações e períodos customizáveis
-
-
 
 ## 📂 Estrutura dos Dados
 
