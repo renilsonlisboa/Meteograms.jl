@@ -224,9 +224,9 @@ module Meteograms
             x = resultado.Mês
         end
 
-        trace_min = scatter(x=x, y=resultado.TEM_MIN, mode="lines+markers", name="TEM_MIN")
-        trace_med = scatter(x=x, y=resultado.TEM_MED, mode="lines+markers", name="TEM_MED")
-        trace_max = scatter(x=x, y=resultado.TEM_MAX, mode="lines+markers", name="TEM_MAX")
+        trace_min = scatter(x=x, y=resultado.TEM_MIN, mode="lines+markers", name="TEM_MIN", line=attr(color="deepskyblue"))
+        trace_med = scatter(x=x, y=resultado.TEM_MED, mode="lines+markers", name="TEM_MED", line=attr(color="limegreen"))
+        trace_max = scatter(x=x, y=resultado.TEM_MAX, mode="lines+markers", name="TEM_MAX", line=attr(color="red"))
 
         # Define os paramêtros para a plotagem do gráfico
         layout = Layout(
