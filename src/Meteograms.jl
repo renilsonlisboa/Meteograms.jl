@@ -71,7 +71,7 @@ module Meteograms
             trace_min = scatter(x=x, y=passmissing(x -> ustrip(x.val)).(teste.TEMP_MIN), mode="lines+markers", name="TEM_MIN",  line=attr(color="deepskyblue"))
             trace_med = scatter(x=x, y=passmissing(x -> ustrip(x.val)).(teste.TEMP_MED), mode="lines+markers", name="TEM_MED",  line=attr(color="limegreen"))
             trace_max = scatter(x=x, y=passmissing(x -> ustrip(x.val)).(teste.TEMP_MAX), mode="lines+markers", name="TEM_MAX",  line=attr(color="red"))
-        
+
             # Define os paramêtros para a plotagem do gráfico
             layout = Layout(
                 title=attr(
@@ -120,7 +120,7 @@ module Meteograms
                 width = 1800,
                 height = 720
             )
-        
+
             fig =   plot([trace_min, trace_med, trace_max], layout)
             savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Temperatura $(Meses[month(data)]) de $(year(data)).png", scale=3)
             
