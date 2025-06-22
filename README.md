@@ -75,10 +75,3 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 ## 🙋‍♂️ Contribuindo
 
 Contribuições são bem-vindas! Sinta-se livre para abrir *issues*, *pull requests* ou sugerir melhorias.
-
-## 📫 Contato
-
-Para dúvidas ou sugestões:
-- **Autor**: Renilson Lisboa Júnior
-- **Email**: renilsonlisboajunior@gmail.com
-- **Instituição**: UFPR - Universidade Federal do Paraná
