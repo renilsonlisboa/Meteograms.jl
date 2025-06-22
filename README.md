@@ -50,19 +50,8 @@ Os dados importados seguem a estrutura padrão do INMET e são retornados como `
 using Meteograms
 
 # Listar estações disponíveis para uma cidade
-estacoes = listar_estacoes("CURITIBA")
+Meteograms.meteorologia("01/01/2025", "31/05/2025", "RS")
 
-# Importar dados para uma estação e intervalo de datas
-dados = importar_inmet("A838", "2022-01-01", "2022-12-31")
-
-# Plotar a temperatura diária
-plot_temperatura(dados; tipo=:diario)
-
-# Gerar gráfico mensal de precipitação
-plot_precipitacao(dados; tipo=:mensal)
-
-# Obter estatísticas resumidas
-resumo = resumo_meteorologico(dados)
 ```
 
 ## 📊 Exemplos de Gráficos
@@ -82,19 +71,14 @@ resumo = resumo_meteorologico(dados)
 - [REPL](https://docs.julialang.org/en/v1/stdlib/REPL/)
 - [Unitful](https://painterqubits.github.io/Unitful.jl/stable/)
 
-
-
 ## 📄 Licença
 
 Este projeto está licenciado sob a [MIT License](LICENSE).
 
 
-
 ## 🙋‍♂️ Contribuindo
 
 Contribuições são bem-vindas! Sinta-se livre para abrir *issues*, *pull requests* ou sugerir melhorias.
-
-
 
 ## 📫 Contato
 
