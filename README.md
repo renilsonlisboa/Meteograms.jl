@@ -49,7 +49,6 @@ Os dados importados seguem a estrutura padrão do INMET e são retornados como `
 ```julia
 using Meteograms
 
-# Listar estações disponíveis para uma cidade
 Meteograms.meteorologia("01/01/2025", "31/05/2025", "RS")
 
 ```
