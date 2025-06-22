@@ -221,7 +221,7 @@ module Meteograms
         if data_inicial[3] != data_final[3]
             x = resultado.Mês
         else
-            x = resultado.tempo
+            x = resultado.Mês
         end
 
         trace_min = scatter(x=x, y=resultado.TEM_MIN, mode="lines+markers", name="TEM_MIN")
@@ -231,7 +231,7 @@ module Meteograms
         # Define os paramêtros para a plotagem do gráfico
         layout = Layout(
             title=attr(
-                text="Temperatura Max, Min, Med em $(Meses[month(data)]) de $(year(data))",
+                text="Temperatura Max, Min, Med em $(year(data))",
                 x=0.5,
                 xanchor="center",
                 font=attr(
@@ -257,7 +257,6 @@ module Meteograms
                 tickmode="linear",
                 tick0=1,
                 dtick=1,
-                range=[0.5, day(Dates.lastdayofmonth(data)) + 0.5],
                 showgrid=false,     
                 gridcolor="lightgray",  
                 gridwidth=1             
