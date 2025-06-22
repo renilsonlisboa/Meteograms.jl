@@ -221,7 +221,7 @@ module Meteograms
         if data_inicial[3] != data_final[3]
             x = resultado.Mês
         else
-            x = resultado.Mês
+            x = resultado.Tempo
         end
 
         trace_min = scatter(x=x, y=resultado.TEM_MIN, mode="lines+markers", name="TEM_MIN", line=attr(color="deepskyblue"))
