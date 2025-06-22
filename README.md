@@ -67,11 +67,10 @@ Meteograms.meteorologia("01/01/2025", "31/05/2025", "RS")
 - [REPL](https://docs.julialang.org/en/v1/stdlib/REPL/)
 - [Unitful](https://painterqubits.github.io/Unitful.jl/stable/)
 
-## 📄 Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
-
 ## 🙋‍♂️ Contribuindo
 
 Contribuições são bem-vindas! Sinta-se livre para abrir *issues*, *pull requests* ou sugerir melhorias.
+
+## 📄 Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
