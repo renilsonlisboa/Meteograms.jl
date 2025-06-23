@@ -16,7 +16,7 @@ module Meteograms
         end
     end
 
-    function meteorologia(start::String, finish::String, UF::String = "RS", Municipio = "FREDERICO WESTPHALEM")
+    function meteorologia(start::String, finish::String, UF::String = "RS")
         
         # Realiza a verificação e localização da Área de Trabalho do Usuário
         caminho_desktop = joinpath(homedir(), "OneDrive\\Área de Trabalho")
@@ -43,6 +43,7 @@ module Meteograms
         end
         
         dados = INMET.series(Symbol(estacoes_disponiveis[choices]), Date(data_inicial[3],data_inicial[2],data_inicial[1]), Date(data_final[3],data_final[2],data_final[1]), :day)
+        dados2 = INMET.series(Symbol(estacoes_disponiveis[choices]), Date(data_inicial[3],data_inicial[2],data_inicial[1]), Date(data_final[3],data_final[2],data_final[1]), :hour)
 
         # Variável auxiliar para classificação dos dados
         Meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
@@ -75,7 +76,7 @@ module Meteograms
             # Define os paramêtros para a plotagem do gráfico
             layout = Layout(
                 title=attr(
-                    text="Temperatura Max, Min, Med em $(Meses[month(data)]) de $(year(data))",
+                    text="Temperatura do Ar Max, Min, Med em $(Meses[month(data)]) de $(year(data))",
                     x=0.5,
                     xanchor="center",
                     font=attr(
@@ -86,7 +87,7 @@ module Meteograms
                 ),
                 yaxis=attr(
                     title=attr(
-                        text="Temperatura (°C)",
+                        text="Temperatura do Ar (°C)",
                         font=attr(
                             family="Arial Black",
                             size=14,
@@ -236,7 +237,7 @@ module Meteograms
             ),
             yaxis=attr(
                 title=attr(
-                    text="Temperatura (°C)",
+                    text="Temperatura do Ar (°C)",
                     font=attr(
                         family="Arial Black",
                         size=14,
@@ -362,5 +363,7 @@ module Meteograms
         catch e
 
         end
+
+        return dados2
     end
 end
