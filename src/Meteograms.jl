@@ -123,6 +123,7 @@ module Meteograms
             )
 
             fig =   plot([trace_min, trace_med, trace_max], layout)
+            display(fig)
             savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Temperatura $(Meses[month(data)]) de $(year(data)).png", scale=3)
             
             precipitacao = passmissing(x -> ustrip(x.val)).(teste.CHUVA)
