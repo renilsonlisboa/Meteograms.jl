@@ -356,5 +356,11 @@ module Meteograms
         display(fig)
 
         savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\Preciptação Pluvial $(year(data)).png", scale=3)
+        
+        try 
+            run(`explorer $(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])`)
+        catch e
+
+        end
     end
 end
