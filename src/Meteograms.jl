@@ -136,7 +136,7 @@ module Meteograms
             bar_plot = bar(
                 x=x,
                 y=precipitacao,
-                name="Precipitação Diária (mm)",
+                name="Precipitação Pluvial Diária",
                 marker_color="rgba(55, 128, 191, 0.7)",
                 opacity=0.7
             )
@@ -145,7 +145,7 @@ module Meteograms
             line_plot = scatter(
                 x=x,
                 y=acumulado,
-                name="Preciptação Acumulada (mm)",
+                name="Preciptação Pluvial Acumulada",
                 line=attr(color="red", width=2.5),
                 yaxis="y2"
             )
@@ -153,7 +153,7 @@ module Meteograms
             # Configurar o layout
             layout = Layout(
                 title=attr(
-                    text="Precipitação em $(Meses[(month(data))]) de $(year(data))",
+                    text="Precipitação Pluvial em $(Meses[(month(data))]) de $(year(data))",
                     x=0.5,
                     xanchor="center",
                     font=attr(
@@ -164,7 +164,7 @@ module Meteograms
                 ),
                 yaxis=attr(
                     title=attr(
-                        text = "Precipitação Diária (mm)",
+                        text = "Precipitação Pluvial Diária (mm)",
                         font=attr(
                             family="Arial Black",
                             size=14,
@@ -176,7 +176,7 @@ module Meteograms
                 ),
                 yaxis2=attr(
                     title= attr(
-                        text = "Precipitação Acumulada (mm)",
+                        text = "Precipitação Pluvial Acumulada (mm)",
                         font=attr(
                             family="Arial Black",
                             size=14,
@@ -209,20 +209,14 @@ module Meteograms
             savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Preciptação em $(Meses[month(data)]) de $(year(data)).png", scale=3)
 
             
-            resultado = vcat(resultado, DataFrame(Ano = year(data), Mês = Meses[month(data)], TEM_MIN = minimum([x.val for x in skipmissing(teste.TEMP_MIN)]), TEM_MED = round(mean([x.val for x in skipmissing(teste.TEMP_MED)]), digits = 1), TEM_MAX = maximum([x.val for x in skipmissing(teste.TEMP_MAX)])))
+            resultado = vcat(resultado, DataFrame(Ano = year(data), Mês = Meses[month(data)], TEM_MIN = minimum([x.val for x in skipmissing(teste.TEMP_MIN)]), TEM_MED = round(mean([x.val for x in skipmissing(teste.TEMP_MED)]), digits = 1), TEM_MAX = maximum([x.val for x in skipmissing(teste.TEMP_MAX)]), CHUVA = maximum([x.val for x in skipmissing(teste.CHUVA)])))
             
             data += Month(1)
         end
         
         data -= Month(1)
 
-        resultado.tempo = string.(resultado.Ano, "-", resultado.Mês)
-
-        if data_inicial[3] != data_final[3]
-            x = resultado.Mês
-        else
-            x = resultado.Tempo
-        end
+        x = resultado.Mês
 
         trace_min = scatter(x=x, y=resultado.TEM_MIN, mode="lines+markers", name="TEM_MIN", line=attr(color="deepskyblue"))
         trace_med = scatter(x=x, y=resultado.TEM_MED, mode="lines+markers", name="TEM_MED", line=attr(color="limegreen"))
@@ -231,7 +225,7 @@ module Meteograms
         # Define os paramêtros para a plotagem do gráfico
         layout = Layout(
             title=attr(
-                text="Temperatura Max, Min, Med em $(year(data))",
+                text="Temperatura do Ar Max, Min, Med em $(year(data))",
                 x=0.5,
                 xanchor="center",
                 font=attr(
@@ -278,5 +272,89 @@ module Meteograms
         fig = plot([trace_min, trace_med, trace_max], layout)
 
         savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\Resumo Mensal de $(year(data)).png", scale=2)
+
+        precipitacao = resultado.CHUVA
+
+        # Preencher valores missing com 0 para o cálculo acumulado
+        precipitacao_preenchida = coalesce.(precipitacao, 0)
+        
+        # Calcular a precipitação acumulada
+        acumulado = cumsum(precipitacao_preenchida)
+        
+        # Criar o gráfico de barras
+        bar_plot = bar(
+            x=x,
+            y=precipitacao,
+            name="Precipitação Pluvial Diária",
+            marker_color="rgba(55, 128, 191, 0.7)",
+            opacity=0.7
+        )
+        
+        # Criar o gráfico de linha acumulado
+        line_plot = scatter(
+            x=x,
+            y=acumulado,
+            name="Preciptação Pluvial Acumulada",
+            line=attr(color="red", width=2.5),
+            yaxis="y2"
+        )
+        
+        # Configurar o layout
+        layout = Layout(
+            title=attr(
+                text="Precipitação Pluvial $(year(data))",
+                x=0.5,
+                xanchor="center",
+                font=attr(
+                    family="Arial Black",
+                    size=14,
+                    color="black"
+                )
+            ),
+            yaxis=attr(
+                title=attr(
+                    text = "Precipitação Pluvial Diária (mm)",
+                    font=attr(
+                        family="Arial Black",
+                        size=14,
+                        color="black"
+                    )
+                ),
+                side="left",
+                showgrid=true
+            ),
+            yaxis2=attr(
+                title= attr(
+                    text = "Precipitação Pluvial Acumulada (mm)",
+                    font=attr(
+                        family="Arial Black",
+                        size=14,
+                        color="black"
+                    )
+                ),
+                overlaying="y",
+                side="right",
+                showgrid=false,
+                zeroline=false
+            ),
+            plot_bgcolor="rgba(240, 240, 240, 0.8)",
+            legend=attr(
+                orientation="h",
+                x=0.5,
+                xanchor="center",
+                y=-0.05,
+                font=attr(
+                    family="Arial Black",
+                    size=12,
+                    color="black"
+                )
+            ),
+            #margin=attr(r=150)  # Aumenta margem direita para o eixo secundário
+        )
+        
+        fig = plot([bar_plot, line_plot], layout)
+        display(fig)
+
+        savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\Preciptação Pluvial $(year(data)).png", scale=3)
     end
 end
