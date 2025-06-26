@@ -273,7 +273,7 @@ module Meteograms
 
         fig = plot([trace_min, trace_med, trace_max], layout)
 
-        savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\Resumo Mensal de $(year(data)).png", scale=2)
+        savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\Resumo Mensal - Temperatura do Ar.png", scale=2)
 
         precipitacao = resultado.CHUVA
 
