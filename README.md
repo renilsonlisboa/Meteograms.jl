@@ -55,17 +55,8 @@ Meteograms.meteorologia("01/01/2025", "31/05/2025", "RS")
 - Temperatura máxima e mínima com preenchimento entre curvas
 - Precipitação acumulada mensal
 - Boxplot de variações diárias
-- Séries temporais interativas com PlotlyJS (opcional)
+- Séries temporais interativas com PlotlyJS
 
-## 🛠️ Pacotes Utilizados
-
-- [DataFrames](https://github.com/JuliaData/DataFrames.jl)
-- [Dates](https://docs.julialang.org/en/v1/stdlib/Dates/)
-- [INMET](https://github.com/JuliaClimate/INMET.jl)
-- [Missings](https://github.com/JuliaData/Missings.jl)
-- [PlotlyJS](https://github.com/JuliaPlots/PlotlyJS.jl)
-- [REPL](https://docs.julialang.org/en/v1/stdlib/REPL/)
-- [Unitful](https://painterqubits.github.io/Unitful.jl/stable/)
 
 ## 🙋‍♂️ Contribuindo
 
