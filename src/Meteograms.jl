@@ -46,16 +46,22 @@
             dados2 = INMET.series(Symbol(estacoes_disponiveis[choices]), Date(data_inicial[3],data_inicial[2],data_inicial[1]), Date(data_final[3],data_final[2],data_final[1]), :hour)
             
             calc_radiacao = combine(groupby(dados2, [:CD_ESTACAO, :DT_MEDICAO])) do df
-                vals = ustrip.(skipmissing(df.RAD_GLO))  # Remove unidades
+                # Processamento para RAD_GLO
+                rad_vals = ustrip.(skipmissing(df.RAD_GLO))
+                rad_positivos = max.(rad_vals, 0.0)
+                
+                # Processamento para UMD_MAX com tratamento para coleções vazias
                 umid_vals = ustrip.(skipmissing(df.UMD_MAX))
-                vals_positivos = max.(vals, 0.0)        # Substitui negativos por 0
+                umid_max = isempty(umid_vals) ? missing : round(mean(umid_vals), digits = 1)
                 
                 # Retorna um NamedTuple com ambas as colunas
                 (
-                    RAD_GLO = sum(vals_positivos),  # Soma dos valores positivos
-                    UMID_MAX = max(umid_vals)    # Média dos valores positivos
+                    RAD_GLO = sum(rad_positivos),
+                    UMID_MAX = umid_max
                 )
             end
+
+            insertcols!(dados, "RAD_GLO" => calc_radiacao.RAD_GLO, "UMID_MAX" => calc_radiacao.UMID_MAX)
 
             # Variável auxiliar para classificação dos dados
             Meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
@@ -141,7 +147,7 @@
                 # Define cada linha do gráfico
                 trace_min = scatter(x=x, y=passmissing(x -> ustrip(x.val)).(teste.UMID_MIN), mode="lines+markers", name="UMID_MIN",  line=attr(color="deepskyblue"))
                 trace_med = scatter(x=x, y=passmissing(x -> ustrip(x.val)).(teste.UMID_MED), mode="lines+markers", name="UMID_MED",  line=attr(color="limegreen"))
-                trace_max = scatter(x=x, teste.UMID_MAX, mode="lines+markers", name="UMID_MAX",  line=attr(color="red"))
+                trace_max = scatter(x=x, y=teste.UMID_MAX, mode="lines+markers", name="UMID_MAX",  line=attr(color="red"))
 
                 # Define os paramêtros para a plotagem do gráfico
                 layout = Layout(
@@ -191,11 +197,7 @@
                     width = 1800,
                     height = 720
                 )
-
-                fig =   plot([trace_min, trace_med], layout)
-                savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Umidade Relativa $(Meses[month(data)]) de $(year(data)).png", scale=3)
-                
-
+     
                 precipitacao = passmissing(x -> ustrip(x.val)).(teste.CHUVA)
 
                 # Preencher valores missing com 0 para o cálculo acumulado
@@ -278,7 +280,7 @@
                 fig = plot([bar_plot, line_plot], layout)
                 savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Preciptação em $(Meses[month(data)]) de $(year(data)).png", scale=3)
 
-                fig =   plot([trace_min, trace_med], layout)
+                fig =   plot([trace_min, trace_med, trace_max], layout)
                 savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Umidade Relativa $(Meses[month(data)]) de $(year(data)).png", scale=3)
             
                 radiacao = teste.RAD_GLO
@@ -345,6 +347,7 @@
                         TEM_MAX = maximum([x.val for x in skipmissing(teste.TEMP_MAX)]),
                         UMID_MIN= minimum([x.val for x in skipmissing(teste.UMID_MIN)]), 
                         UMID_MED = round(mean([x.val for x in skipmissing(teste.UMID_MED)]), digits = 1), 
+                        UMID_MAX = maximum(teste.UMID_MAX),
                         RAD_GLO = round(mean(teste.RAD_GLO), digits = 1), 
                         CHUVA = maximum([x.val for x in skipmissing(teste.CHUVA)])
                     )
@@ -352,7 +355,9 @@
                 
                 data += Month(1)
             end
-            
+        end
+    end
+
             data -= Month(1)
 
             x = resultado.Mês
@@ -414,7 +419,7 @@
 
             trace_min = scatter(x=x, y=resultado.UMID_MIN, mode="lines+markers", name="UMID_MIN", line=attr(color="deepskyblue"))
             trace_med = scatter(x=x, y=resultado.UMID_MED, mode="lines+markers", name="UMID_MED", line=attr(color="limegreen"))
-            #trace_max = scatter(x=x, y=resultado.UMID_MAX, mode="lines+markers", name="UMID_MAX", line=attr(color="red"))
+            trace_max = scatter(x=x, y=resultado.UMID_MAX, mode="lines+markers", name="UMID_MAX", line=attr(color="red"))
 
             # Define os paramêtros para a plotagem do gráfico
             layout = Layout(
@@ -463,7 +468,7 @@
                 width=800, height=500
             )
 
-            fig = plot([trace_min, trace_med], layout)
+            fig = plot([trace_min, trace_med, trace_max], layout)
             display(fig)
             savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\Resumo Mensal - Umidade Relativa do Ar.png", scale=2)
 
