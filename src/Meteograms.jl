@@ -355,8 +355,6 @@
                 
                 data += Month(1)
             end
-        end
-    end
 
             data -= Month(1)
 
