@@ -273,8 +273,6 @@ module Meteograms
             )
             
             fig = plot([bar_plot, line_plot], layout)
-            display(fig)
-
             savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Preciptação em $(Meses[month(data)]) de $(year(data)).png", scale=3)
 
             fig =   plot([trace_min, trace_med], layout)
