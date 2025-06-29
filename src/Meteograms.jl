@@ -233,7 +233,7 @@ module Meteograms
                 ),
                 yaxis=attr(
                     title=attr(
-                        text = "Precipitação Pluvial Diária (mm)",
+                        text = "Precipitação Pluvial (mm)",
                         font=attr(
                             family="Arial Black",
                             size=14,
