@@ -331,7 +331,6 @@ module Meteograms
             )
             
             fig = plot(bar_plot, layout)
-            display(fig)
 
             savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Radiação Média em $(Meses[month(data)]) de $(year(data)).png", scale=3)
 
@@ -409,7 +408,6 @@ module Meteograms
         )
 
         fig = plot([trace_min, trace_med, trace_max], layout)
-        display(fig)
         savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\Resumo Mensal - Temperatura do Ar.png", scale=2)
 
         trace_min = scatter(x=x, y=resultado.UMID_MIN, mode="lines+markers", name="UMID_MIN", line=attr(color="deepskyblue"))
