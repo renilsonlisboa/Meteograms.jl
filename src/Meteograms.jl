@@ -50,12 +50,10 @@ function meteorologia(start::String, finish::String, UF::String="RS")
         # Processamento para RAD_GLO
         rad_vals = ustrip.(skipmissing(df.RAD_GLO))
         rad_positivos = max.(rad_vals, 0.0)
-        display(rad_vals)
 
         # Processamento para UMD_MAX com tratamento para coleções vazias
         umid_vals = ustrip.(skipmissing(df.UMD_MAX))
         umid_max = isempty(umid_vals) ? missing : round(mean(umid_vals), digits=1)
-        display(umid_vals)
         # Retorna um NamedTuple com ambas as colunas
         (
             RAD_GLO=sum(rad_positivos),
@@ -493,12 +491,12 @@ function meteorologia(start::String, finish::String, UF::String="RS")
     line_plot = scatter(
         x=x,
         y=acumulado,
-        name="Preciptação Pluvial Acumulada",
+        name="Precipitação Pluvial Acumulada",  # Corrigido o typo "Preciptação"
         line=attr(color="red", width=2.5),
         yaxis="y2"
     )
 
-    # Configurar o layout
+    # Configurar o layout COM MARGENS AJUSTADAS
     layout = Layout(
         title=attr(
             text="Precipitação Pluvial $(year(data))",
@@ -541,14 +539,22 @@ function meteorologia(start::String, finish::String, UF::String="RS")
             orientation="h",
             x=0.5,
             xanchor="center",
-            y=-0.05,
+            y=-0.15,  # Aumentado de -0.05 para -0.15 para dar mais espaço
             font=attr(
                 family="Arial Black",
                 size=12,
                 color="black"
             )
         ),
-        #margin=attr(r=150)  # Aumenta margem direita para o eixo secundário
+        margin=attr(  # ADICIONAR MARGENS EXPLÍCITAS
+            l=80,     # Margem esquerda para o eixo Y
+            r=80,     # Margem direita para o eixo Y2  
+            b=100,    # Margem inferior para a legenda
+            t=80,     # Margem superior para o título
+            pad=0
+        ),
+        width=1800,   # Largura consistente com outros gráficos
+        height=720    # Altura consistente com outros gráficos
     )
 
     fig = plot([bar_plot, line_plot], layout)
