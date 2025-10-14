@@ -198,9 +198,6 @@
                     height = 720
                 )
 
-                fig =   plot([trace_min, trace_med, trace_max], layout)
-                savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Umidade Relativa $(Meses[month(data)]) de $(year(data)).png", scale=3)
-     
                 precipitacao = passmissing(x -> ustrip(x.val)).(teste.CHUVA)
 
                 # Preencher valores missing com 0 para o cálculo acumulado
@@ -281,7 +278,10 @@
                 
                 fig = plot([bar_plot, line_plot], layout)
                 savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Preciptação em $(Meses[month(data)]) de $(year(data)).png", scale=3)
-            
+     
+                fig =   plot([trace_min, trace_med, trace_max], layout)
+                savefig(fig, "$(caminho_desktop)\\Resultados_INMET\\$(controle_estacoes_disponiveis[choices])\\$(year(data))\\Umidade Relativa $(Meses[month(data)]) de $(year(data)).png", scale=3)
+                 
                 radiacao = teste.RAD_GLO
 
                 # Criar o gráfico de barras
