@@ -126,19 +126,27 @@ function meteorologia(start::String, finish::String, UF::String="RS")
                 gridcolor="lightgray",
                 gridwidth=1
             ),
+            plot_bgcolor="rgba(240, 240, 240, 0.8)",
             legend=attr(
                 orientation="h",
                 x=0.5,
                 xanchor="center",
-                y=-0.05,
+                y=-0.15,  # Aumentado de -0.05 para -0.15 para dar mais espaço
                 font=attr(
                     family="Arial Black",
                     size=12,
                     color="black"
                 )
             ),
-            width=1800,
-            height=720
+            margin=attr(  # ADICIONAR MARGENS EXPLÍCITAS
+                l=80,     # Margem esquerda para o eixo Y
+                r=80,     # Margem direita para o eixo Y2  
+                b=100,    # Margem inferior para a legenda
+                t=80,     # Margem superior para o título
+                pad=0
+            ),
+            width=1800,   # Largura consistente com outros gráficos
+            height=720    # Altura consistente com outros gráficos
         )
 
         fig = plot([trace_min, trace_med, trace_max], layout)
@@ -183,19 +191,27 @@ function meteorologia(start::String, finish::String, UF::String="RS")
                 gridcolor="lightgray",
                 gridwidth=1
             ),
+            plot_bgcolor="rgba(240, 240, 240, 0.8)",
             legend=attr(
                 orientation="h",
                 x=0.5,
                 xanchor="center",
-                y=-0.05,
+                y=-0.15,  # Aumentado de -0.05 para -0.15 para dar mais espaço
                 font=attr(
                     family="Arial Black",
                     size=12,
                     color="black"
                 )
             ),
-            width=1800,
-            height=720
+            margin=attr(  # ADICIONAR MARGENS EXPLÍCITAS
+                l=80,     # Margem esquerda para o eixo Y
+                r=80,     # Margem direita para o eixo Y2  
+                b=100,    # Margem inferior para a legenda
+                t=80,     # Margem superior para o título
+                pad=0
+            ),
+            width=1800,   # Largura consistente com outros gráficos
+            height=720    # Altura consistente com outros gráficos
         )
 
         precipitacao = passmissing(x -> ustrip(x.val)).(teste.CHUVA)
