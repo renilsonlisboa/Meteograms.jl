@@ -9,7 +9,7 @@ using REPL.TerminalMenus
 function __init__()
     # Configurar a variável de ambiente quando o pacote é carregado
     ENV["INMET_TOKEN"] = "SnFOaWF6Tmd4R1pXa1NQcVdIYlBOTWtNNVA5d29iUWI=JqNiazNgxGZWkSPqWHbPNMkM5P9wobQb"
-
+    
     # Opcional: verificar se foi configurado corretamente
     if !haskey(ENV, "INMET_TOKEN")
         @warn "Falha ao configurar INMET_TOKEN"
@@ -35,9 +35,10 @@ function meteorologia(start::String, finish::String, UF::String="RS")
 
     # Definição do painel de seleção da unidade de 
     choices = 0
-    controle_estacoes_disponiveis = unique(filter(x -> x.UF == UF, INMET.on(Date(data_inicial[3], data_inicial[2], data_inicial[1]))).CD_ESTACAO) .* " - " .* unique(filter(x -> x.UF == UF, INMET.on(Date(data_inicial[3], data_inicial[2], data_inicial[1]))).DC_NOME)
+    controle_estacoes_disponiveis = (filter(x -> x.UF == UF, INMET.on(Date(data_inicial[3], data_inicial[2], data_inicial[1]))).CD_ESTACAO) .* " - " .* (filter(x -> x.UF == UF, INMET.on(Date(data_inicial[3], data_inicial[2], data_inicial[1]))).DC_NOME)
     estacoes_disponiveis = unique(filter(x -> x.UF == UF, INMET.on(Date(data_inicial[3], data_inicial[2], data_inicial[1]))).CD_ESTACAO)
     menu = RadioMenu(controle_estacoes_disponiveis)
+
     while choices == 0
         choices = request("Selecione a estação meteorológica:", menu)
     end
@@ -49,11 +50,12 @@ function meteorologia(start::String, finish::String, UF::String="RS")
         # Processamento para RAD_GLO
         rad_vals = ustrip.(skipmissing(df.RAD_GLO))
         rad_positivos = max.(rad_vals, 0.0)
+        display(rad_vals)
 
         # Processamento para UMD_MAX com tratamento para coleções vazias
         umid_vals = ustrip.(skipmissing(df.UMD_MAX))
         umid_max = isempty(umid_vals) ? missing : round(mean(umid_vals), digits=1)
-
+        display(umid_vals)
         # Retorna um NamedTuple com ambas as colunas
         (
             RAD_GLO=sum(rad_positivos),
